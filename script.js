@@ -59,10 +59,14 @@ function createDivsForColors(colorArray) {
 
 let color1 = '';
 let firstSquare = null;
+let secondSquare = null;
 
 // TODO: Implement this function!
 function handleCardClick(event) {
 	console.log('you just clicked', event.target);
+	if (secondSquare) {
+		return;
+	}
 	event.target.removeEventListener('click', handleCardClick);
 	event.target.style.backgroundColor = event.target.className;
 	if (firstSquare) {
@@ -71,6 +75,8 @@ function handleCardClick(event) {
 			firstSquare = null;
 			color1 = '';
 		} else {
+			secondSquare = event.target;
+			// Pause for one second and reset squares and event
 			setTimeout(function() {
 				firstSquare.style.backgroundColor = 'white';
 				firstSquare.addEventListener('click', handleCardClick);
@@ -78,20 +84,13 @@ function handleCardClick(event) {
 				event.target.addEventListener('click', handleCardClick);
 				color1 = '';
 				firstSquare = null;
+				secondSquare = null;
 			}, 1000);
 		}
 	} else {
 		firstSquare = event.target;
 		color1 = event.target.className;
 	}
-}
-function resetSquares(event) {
-	firstSquare.style.backgroundColor = 'white';
-	firstSquare.addEventListener('click', handleCardClick);
-	event.target.style.backgroundColor = 'white';
-	event.target.addEventListener('click', handleCardClick);
-	color1 = '';
-	firstSquare = null;
 }
 
 // when the DOM loads
