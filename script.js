@@ -1,39 +1,39 @@
-const gameContainer = document.getElementById("game");
+const gameContainer = document.getElementById('game');
 
 const COLORS = [
-  "red",
-  "blue",
-  "green",
-  "orange",
-  "purple",
-  "red",
-  "blue",
-  "green",
-  "orange",
-  "purple"
+	'red',
+	'blue',
+	'green',
+	'orange',
+	'purple',
+	'red',
+	'blue',
+	'green',
+	'orange',
+	'purple'
 ];
 
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
 // it is based on an algorithm called Fisher Yates if you want ot research more
 function shuffle(array) {
-  let counter = array.length;
+	let counter = array.length;
 
-  // While there are elements in the array
-  while (counter > 0) {
-    // Pick a random index
-    let index = Math.floor(Math.random() * counter);
+	// While there are elements in the array
+	while (counter > 0) {
+		// Pick a random index
+		let index = Math.floor(Math.random() * counter);
 
-    // Decrease counter by 1
-    counter--;
+		// Decrease counter by 1
+		counter--;
 
-    // And swap the last element with it
-    let temp = array[counter];
-    array[counter] = array[index];
-    array[index] = temp;
-  }
+		// And swap the last element with it
+		let temp = array[counter];
+		array[counter] = array[index];
+		array[index] = temp;
+	}
 
-  return array;
+	return array;
 }
 
 let shuffledColors = shuffle(COLORS);
@@ -42,25 +42,74 @@ let shuffledColors = shuffle(COLORS);
 // it creates a new div and gives it a class with the value of the color
 // it also adds an event listener for a click for each card
 function createDivsForColors(colorArray) {
-  for (let color of colorArray) {
-    // create a new div
-    const newDiv = document.createElement("div");
+	for (let color of colorArray) {
+		// create a new div
+		const newDiv = document.createElement('div');
 
-    // give it a class attribute for the value we are looping over
-    newDiv.classList.add(color);
+		// give it a class attribute for the value we are looping over
+		newDiv.classList.add(color);
 
-    // call a function handleCardClick when a div is clicked on
-    newDiv.addEventListener("click", handleCardClick);
+		// call a function handleCardClick when a div is clicked on
+		newDiv.addEventListener('click', handleCardClick);
 
-    // append the div to the element with an id of game
-    gameContainer.append(newDiv);
-  }
+		// append the div to the element with an id of game
+		gameContainer.append(newDiv);
+	}
+}
+
+function compareColors(color) {
+	if (pick1) {
+		result = color1 === color;
+		color1 = '';
+		return result;
+	} else {
+		color1 = color;
+		return false;
+	}
 }
 
 // TODO: Implement this function!
+// function handleCardClick(event) {
+// 	console.log('you just clicked', event.target);
+// 	const color = event.target.className;
+// 	const firstSquare = event.target;
+// 	firstSquare.removeEventListener('click', handleCardClick);
+// 	firstSquare.style.backgroundColor = color;
+// 	if (compareColors(color)) {
+// 		console.log('match');
+// 		event.target.removeEventListener('click', handleCardClick);
+// 		firstSquare.removeEventListener('click', handleCardClick);
+// 		firstSquare = null;
+// 	} else {
+// 		firstSquare.addEventListener('click', handleCardClick);
+// 	}
+// }
+
+let color1 = '';
+let firstSquare = null;
+
 function handleCardClick(event) {
-  // you can use event.target to see which element was clicked
-  console.log("you just clicked", event.target);
+	console.log('you just clicked', event.target);
+	event.target.removeEventListener('click', handleCardClick);
+	event.target.style.backgroundColor = event.target.className;
+	if (firstSquare) {
+		if (event.target.className === color1) {
+			console.log('match');
+			firstSquare = null;
+			color1 = '';
+		} else {
+			//pause
+			firstSquare.style.backgroundColor = 'white';
+			firstSquare.addEventListener('click', handleCardClick);
+			event.target.style.backgroundColor = 'white';
+			event.target.addEventListener('click', handleCardClick);
+			color1 = '';
+			firstSquare = null;
+		}
+	} else {
+		firstSquare = event.target;
+		color1 = event.target.className;
+	}
 }
 
 // when the DOM loads
