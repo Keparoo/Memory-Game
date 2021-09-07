@@ -57,37 +57,10 @@ function createDivsForColors(colorArray) {
 	}
 }
 
-function compareColors(color) {
-	if (pick1) {
-		result = color1 === color;
-		color1 = '';
-		return result;
-	} else {
-		color1 = color;
-		return false;
-	}
-}
-
-// TODO: Implement this function!
-// function handleCardClick(event) {
-// 	console.log('you just clicked', event.target);
-// 	const color = event.target.className;
-// 	const firstSquare = event.target;
-// 	firstSquare.removeEventListener('click', handleCardClick);
-// 	firstSquare.style.backgroundColor = color;
-// 	if (compareColors(color)) {
-// 		console.log('match');
-// 		event.target.removeEventListener('click', handleCardClick);
-// 		firstSquare.removeEventListener('click', handleCardClick);
-// 		firstSquare = null;
-// 	} else {
-// 		firstSquare.addEventListener('click', handleCardClick);
-// 	}
-// }
-
 let color1 = '';
 let firstSquare = null;
 
+// TODO: Implement this function!
 function handleCardClick(event) {
 	console.log('you just clicked', event.target);
 	event.target.removeEventListener('click', handleCardClick);
@@ -98,18 +71,27 @@ function handleCardClick(event) {
 			firstSquare = null;
 			color1 = '';
 		} else {
-			//pause
-			firstSquare.style.backgroundColor = 'white';
-			firstSquare.addEventListener('click', handleCardClick);
-			event.target.style.backgroundColor = 'white';
-			event.target.addEventListener('click', handleCardClick);
-			color1 = '';
-			firstSquare = null;
+			setTimeout(function() {
+				firstSquare.style.backgroundColor = 'white';
+				firstSquare.addEventListener('click', handleCardClick);
+				event.target.style.backgroundColor = 'white';
+				event.target.addEventListener('click', handleCardClick);
+				color1 = '';
+				firstSquare = null;
+			}, 1000);
 		}
 	} else {
 		firstSquare = event.target;
 		color1 = event.target.className;
 	}
+}
+function resetSquares(event) {
+	firstSquare.style.backgroundColor = 'white';
+	firstSquare.addEventListener('click', handleCardClick);
+	event.target.style.backgroundColor = 'white';
+	event.target.addEventListener('click', handleCardClick);
+	color1 = '';
+	firstSquare = null;
 }
 
 // when the DOM loads
