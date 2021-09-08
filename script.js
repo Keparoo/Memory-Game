@@ -1,17 +1,42 @@
 const gameContainer = document.getElementById('game');
 
-const COLORS = [
+// const COLORS = [
+// 	'red',
+// 	'blue',
+// 	'green',
+// 	'orange',
+// 	'purple',
+// 	'red',
+// 	'blue',
+// 	'green',
+// 	'orange',
+// 	'purple'
+// ];
+
+const COLORPAIR = [
 	'red',
 	'blue',
 	'green',
 	'orange',
 	'purple',
-	'red',
-	'blue',
-	'green',
-	'orange',
-	'purple'
+	'gray',
+	'lightblue',
+	'lime',
+	'magenta',
+	'chartreuse'
 ];
+
+let color1 = '';
+let firstSquare = null;
+let secondSquare = null;
+let numPairs;
+let numMatches = 0;
+let gameOver = true;
+let scoreEl = document.querySelector('#score');
+scoreEl.innerText = numMatches;
+let highScore = parseInt(localStorage.getItem('highScore')) || 0;
+let highScoreEl = document.querySelector('#highScore');
+highScoreEl.innerText = highScore;
 
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
@@ -36,32 +61,18 @@ function shuffle(array) {
 	return array;
 }
 
-let shuffledColors = shuffle(COLORS);
-
 // this function loops over the array of colors
 // it creates a new div and gives it a class with the value of the color
 // it also adds an event listener for a click for each card
 function createDivsForColors(colorArray) {
 	for (let color of colorArray) {
-		// create a new div
 		const newDiv = document.createElement('div');
-
-		// give it a class attribute for the value we are looping over
 		newDiv.classList.add(color);
-
-		// call a function handleCardClick when a div is clicked on
 		newDiv.addEventListener('click', handleCardClick);
-
-		// append the div to the element with an id of game
 		gameContainer.append(newDiv);
 	}
 }
 
-let color1 = '';
-let firstSquare = null;
-let secondSquare = null;
-
-// TODO: Implement this function!
 function handleCardClick(event) {
 	console.log('you just clicked', event.target);
 	if (secondSquare) {
@@ -72,8 +83,19 @@ function handleCardClick(event) {
 	if (firstSquare) {
 		if (event.target.className === color1) {
 			console.log('match');
+			numMatches++;
+			scoreEl.innerText = numMatches;
 			firstSquare = null;
 			color1 = '';
+			console.log('num matches', numMatches, 'num Pairs', numPairs);
+			if (numMatches === numPairs) {
+				console.log('Game Over');
+				gameOver = true;
+				console.log('Score', numMatches, 'High Score', highScore);
+				if (numMatches > highScore) {
+					localStorage.setItem('highScore', numMatches);
+				}
+			}
 		} else {
 			secondSquare = event.target;
 			// Pause for one second and reset squares and event
@@ -93,5 +115,31 @@ function handleCardClick(event) {
 	}
 }
 
+function setupGame() {
+	console.log('Start Game');
+	start.innerText = 'Reset Game';
+	gameOver = false;
+	const numPairsEl = document.querySelector('#numPairs');
+	numPairs = parseInt(numPairsEl.value);
+	chosenColors = COLORPAIR.slice(0, numPairs);
+	const COLORS = chosenColors.concat(chosenColors);
+	let shuffledColors = shuffle(COLORS);
+	createDivsForColors(shuffledColors);
+}
+
 // when the DOM loads
-createDivsForColors(shuffledColors);
+document.addEventListener('DOMContentLoaded', function() {
+	console.log('DOM loaded');
+	start = document.querySelector('#start-reset');
+	start.addEventListener('click', function() {
+		if (gameOver) {
+			if (gameContainer.firstElementChild) {
+				location.reload();
+			} else {
+				setupGame();
+			}
+		} else {
+			location.reload();
+		}
+	});
+});

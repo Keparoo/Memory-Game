@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <title>Memory Game!</title>
     <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <h1>Memory Game!</h1>
+    <h2>Score <span id="score"></span>---High Score <span id="highScore"></span></h2>
+    <p>
+        <label for="numPairs">Number of Pairs to find</label>
+        <input type="range" min="2" max="10" value="2" id="numPairs">
+    </p>
+    <button id="start-reset">Start</button>
     <div id="game">
     </div>
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>
