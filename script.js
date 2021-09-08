@@ -19,6 +19,7 @@ let secondSquare = null;
 let numPairs;
 let numMatches = 0;
 let gameOver = true;
+
 let scoreEl = document.querySelector('#score');
 scoreEl.innerText = numMatches;
 let highScore = parseInt(localStorage.getItem('highScore')) || 0;
@@ -61,13 +62,14 @@ function createDivsForColors(colorArray) {
 }
 
 function handleCardClick(event) {
-	console.log('you just clicked', event.target);
+	// Prevent clicking beyond two chosen squares
 	if (secondSquare) {
 		return;
 	}
 	event.target.removeEventListener('click', handleCardClick);
 	event.target.style.backgroundColor = event.target.className;
 	if (firstSquare) {
+		// Match found
 		if (event.target.className === color1) {
 			numMatches++;
 			scoreEl.innerText = numMatches;
@@ -85,6 +87,7 @@ function handleCardClick(event) {
 				}
 			}
 		} else {
+			// Second square of unmatched pair clicked
 			secondSquare = event.target;
 			// Pause for one second and reset squares and event
 			setTimeout(function() {
@@ -98,6 +101,7 @@ function handleCardClick(event) {
 			}, 1000);
 		}
 	} else {
+		// First Square of pair clicked
 		firstSquare = event.target;
 		color1 = event.target.className;
 	}
@@ -107,11 +111,14 @@ function setupGame() {
 	console.log('Start Game');
 	start.innerText = 'Reset Game';
 	gameOver = false;
+
+	// Determine how many color pairs and create deck
 	const numPairsEl = document.querySelector('#numPairs');
 	numPairs = parseInt(numPairsEl.value);
-
 	const chosenColors = COLORS.slice(0, numPairs);
 	const COLORPAIRS = chosenColors.concat(chosenColors);
+
+	// Shuffle deck and display cards
 	const shuffledColors = shuffle(COLORPAIRS);
 	createDivsForColors(shuffledColors);
 	document.querySelector('#gameSetup').style.display = 'none';
