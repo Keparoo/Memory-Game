@@ -1,19 +1,6 @@
 const gameContainer = document.getElementById('game');
 
-// const COLORS = [
-// 	'red',
-// 	'blue',
-// 	'green',
-// 	'orange',
-// 	'purple',
-// 	'red',
-// 	'blue',
-// 	'green',
-// 	'orange',
-// 	'purple'
-// ];
-
-const COLORPAIR = [
+const COLORS = [
 	'red',
 	'blue',
 	'green',
@@ -82,16 +69,17 @@ function handleCardClick(event) {
 	event.target.style.backgroundColor = event.target.className;
 	if (firstSquare) {
 		if (event.target.className === color1) {
-			console.log('match');
 			numMatches++;
 			scoreEl.innerText = numMatches;
 			firstSquare = null;
 			color1 = '';
-			console.log('num matches', numMatches, 'num Pairs', numPairs);
+
 			if (numMatches === numPairs) {
 				console.log('Game Over');
+				document.querySelector('#gameOver').innerText =
+					'You won! Click reset to play a new game.';
 				gameOver = true;
-				console.log('Score', numMatches, 'High Score', highScore);
+
 				if (numMatches > highScore) {
 					localStorage.setItem('highScore', numMatches);
 				}
@@ -121,10 +109,12 @@ function setupGame() {
 	gameOver = false;
 	const numPairsEl = document.querySelector('#numPairs');
 	numPairs = parseInt(numPairsEl.value);
-	chosenColors = COLORPAIR.slice(0, numPairs);
-	const COLORS = chosenColors.concat(chosenColors);
-	let shuffledColors = shuffle(COLORS);
+
+	const chosenColors = COLORS.slice(0, numPairs);
+	const COLORPAIRS = chosenColors.concat(chosenColors);
+	const shuffledColors = shuffle(COLORPAIRS);
 	createDivsForColors(shuffledColors);
+	document.querySelector('#gameSetup').style.display = 'none';
 }
 
 // when the DOM loads
