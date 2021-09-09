@@ -5,22 +5,28 @@
     <meta charset="UTF-8" />
     <title>Memory Game!</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Memory Game!</h1>
-    <h2>Score <span id="score"></span>---High Score <span id="highScore"></span></h2>
-    <h3 id="gameOver"></h3>
-
-    <span id="gameSetup">
-        <label for="numPairs">Number of Pairs to find</label>
-        <input type="range" min="2" max="10" value="5" id="numPairs">
-    </span>
-    <button id="start-reset">Start</button>
-
-
-    <div id="game">
+    <div id="title">
+        <h1>Memory Game!</h1>
+        <h2>Score <span id="score"></span>---High Score <span id="highScore"></span></h2>
+        <h3 id="gameOver"></h3>
     </div>
+
+    <div id="controls">
+        <span id="gameSetup">
+            <label for="numPairs">Number of Pairs to find</label>
+            <input type="range" min="2" max="10" value="5" id="numPairs">
+        </span>
+        <button id="start-reset">Start</button>
+    </div>
+
+    <div id="game"></div>
+
     <script src="script.js"></script>
 </body>
 
