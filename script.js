@@ -24,6 +24,7 @@ let highScore = parseInt(localStorage.getItem('highScore')) || 0;
 let highScoreEl = document.querySelector('#highScore');
 highScoreEl.innerText = highScore;
 const gameContainer = document.getElementById('game');
+const start = document.querySelector('#start-reset');
 
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
@@ -128,19 +129,14 @@ function setupGame() {
 	document.querySelector('#gameSetup').style.display = 'none';
 }
 
-// when the DOM loads
-document.addEventListener('DOMContentLoaded', function() {
-	console.log('DOM loaded');
-	start = document.querySelector('#start-reset');
-	start.addEventListener('click', function() {
-		if (gameOver) {
-			if (gameContainer.firstElementChild) {
-				location.reload();
-			} else {
-				setupGame();
-			}
-		} else {
+start.addEventListener('click', function() {
+	if (gameOver) {
+		if (gameContainer.firstElementChild) {
 			location.reload();
+		} else {
+			setupGame();
 		}
-	});
+	} else {
+		location.reload();
+	}
 });
