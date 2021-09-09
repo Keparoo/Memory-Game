@@ -61,6 +61,15 @@ function createDivsForColors(colorArray) {
 		createDiv(color);
 	}
 }
+function resetSquares(event) {
+	firstSquare.style.backgroundColor = 'white';
+	firstSquare.addEventListener('click', handleCardClick);
+	event.target.style.backgroundColor = 'white';
+	event.target.addEventListener('click', handleCardClick);
+	color1 = '';
+	firstSquare = null;
+	secondSquare = null;
+}
 
 function handleCardClick(event) {
 	// Prevent clicking beyond two chosen squares
@@ -92,13 +101,7 @@ function handleCardClick(event) {
 			secondSquare = event.target;
 			// Pause for one second and reset squares and event
 			setTimeout(function() {
-				firstSquare.style.backgroundColor = 'white';
-				firstSquare.addEventListener('click', handleCardClick);
-				event.target.style.backgroundColor = 'white';
-				event.target.addEventListener('click', handleCardClick);
-				color1 = '';
-				firstSquare = null;
-				secondSquare = null;
+				resetSquares(event);
 			}, 1000);
 		}
 	} else {
