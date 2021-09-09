@@ -1,5 +1,3 @@
-const gameContainer = document.getElementById('game');
-
 const COLORS = [
 	'red',
 	'blue',
@@ -25,6 +23,7 @@ scoreEl.innerText = numMatches;
 let highScore = parseInt(localStorage.getItem('highScore')) || 0;
 let highScoreEl = document.querySelector('#highScore');
 highScoreEl.innerText = highScore;
+const gameContainer = document.getElementById('game');
 
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
@@ -34,10 +33,8 @@ function shuffle(array) {
 
 	// While there are elements in the array
 	while (counter > 0) {
-		// Pick a random index
+		//pick a random index
 		let index = Math.floor(Math.random() * counter);
-
-		// Decrease counter by 1
 		counter--;
 
 		// And swap the last element with it
@@ -49,15 +46,19 @@ function shuffle(array) {
 	return array;
 }
 
+function createDiv(color) {
+	const newDiv = document.createElement('div');
+	newDiv.classList.add(color);
+	newDiv.addEventListener('click', handleCardClick);
+	gameContainer.append(newDiv);
+}
+
 // this function loops over the array of colors
 // it creates a new div and gives it a class with the value of the color
 // it also adds an event listener for a click for each card
 function createDivsForColors(colorArray) {
 	for (let color of colorArray) {
-		const newDiv = document.createElement('div');
-		newDiv.classList.add(color);
-		newDiv.addEventListener('click', handleCardClick);
-		gameContainer.append(newDiv);
+		createDiv(color);
 	}
 }
 
