@@ -48,7 +48,7 @@ function shuffle(array) {
 
 function createDiv(color) {
 	const newDiv = document.createElement('div');
-	newDiv.classList.add(color);
+	newDiv.setAttribute('data-color', color);
 	newDiv.addEventListener('click', handleCardClick);
 	gameContainer.append(newDiv);
 }
@@ -77,10 +77,10 @@ function handleCardClick(event) {
 		return;
 	}
 	event.target.removeEventListener('click', handleCardClick);
-	event.target.style.backgroundColor = event.target.className;
+	event.target.style.backgroundColor = event.target.getAttribute('data-color');
 	if (firstSquare) {
 		// Match found
-		if (event.target.className === color1) {
+		if (event.target.getAttribute('data-color') === color1) {
 			numMatches++;
 			scoreEl.innerText = numMatches;
 			firstSquare = null;
@@ -107,7 +107,7 @@ function handleCardClick(event) {
 	} else {
 		// First Square of pair clicked
 		firstSquare = event.target;
-		color1 = event.target.className;
+		color1 = event.target.getAttribute('data-color');
 	}
 }
 
