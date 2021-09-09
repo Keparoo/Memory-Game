@@ -74,9 +74,8 @@ function resetSquares(event) {
 
 function handleCardClick(event) {
 	// Prevent clicking beyond two chosen squares
-	if (secondSquare) {
-		return;
-	}
+	if (secondSquare) return;
+
 	event.target.removeEventListener('click', handleCardClick);
 	event.target.style.backgroundColor = event.target.getAttribute('data-color');
 	if (firstSquare) {
