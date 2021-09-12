@@ -29,7 +29,7 @@ const start = document.querySelector('#start-reset');
 // here is a helper function to shuffle an array
 // it returns the same array with values shuffled
 // it is based on an algorithm called Fisher Yates if you want ot research more
-function shuffle(array) {
+shuffle = array => {
 	let counter = array.length;
 
 	// While there are elements in the array
@@ -45,24 +45,24 @@ function shuffle(array) {
 	}
 
 	return array;
-}
+};
 
-function createDiv(color) {
+createDiv = color => {
 	const newDiv = document.createElement('div');
 	newDiv.setAttribute('data-color', color);
 	newDiv.addEventListener('click', handleCardClick);
 	gameContainer.append(newDiv);
-}
+};
 
 // this function loops over the array of colors
 // it creates a new div and gives it a class with the value of the color
 // it also adds an event listener for a click for each card
-function createDivsForColors(colorArray) {
+createDivsForColors = colorArray => {
 	for (let color of colorArray) {
 		createDiv(color);
 	}
-}
-function resetSquares(event) {
+};
+resetSquares = event => {
 	firstSquare.style.backgroundColor = 'white';
 	firstSquare.addEventListener('click', handleCardClick);
 	event.target.style.backgroundColor = 'white';
@@ -70,9 +70,9 @@ function resetSquares(event) {
 	color1 = '';
 	firstSquare = null;
 	secondSquare = null;
-}
+};
 
-function handleCardClick(event) {
+handleCardClick = event => {
 	// Prevent clicking beyond two chosen squares
 	if (secondSquare) return;
 
@@ -100,7 +100,7 @@ function handleCardClick(event) {
 			// Second square of unmatched pair clicked
 			secondSquare = event.target;
 			// Pause for one second and reset squares and event
-			setTimeout(function() {
+			setTimeout(() => {
 				resetSquares(event);
 			}, 1000);
 		}
@@ -109,9 +109,9 @@ function handleCardClick(event) {
 		firstSquare = event.target;
 		color1 = event.target.getAttribute('data-color');
 	}
-}
+};
 
-function setupGame() {
+setupGame = () => {
 	console.log('Start Game');
 	start.innerText = 'Reset Game';
 	gameOver = false;
@@ -126,9 +126,9 @@ function setupGame() {
 	const shuffledColors = shuffle(COLORPAIRS);
 	createDivsForColors(shuffledColors);
 	document.querySelector('#gameSetup').style.display = 'none';
-}
+};
 
-start.addEventListener('click', function() {
+start.addEventListener('click', () => {
 	if (gameOver) {
 		if (gameContainer.firstElementChild) {
 			location.reload();
