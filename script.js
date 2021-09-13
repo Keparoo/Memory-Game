@@ -19,8 +19,8 @@ let numMatches = 0;
 let gameOver = true;
 
 let scoreEl = document.querySelector('#score');
-scoreEl.innerText = numMatches;
-let highScore = parseInt(localStorage.getItem('highScore')) || 0;
+scoreEl.innerText = numMatches * 2;
+let highScore = parseInt(localStorage.getItem('highScore')) * 2 || 0;
 let highScoreEl = document.querySelector('#highScore');
 highScoreEl.innerText = highScore;
 const gameContainer = document.getElementById('game');
@@ -82,7 +82,7 @@ handleCardClick = event => {
 		// Match found
 		if (event.target.getAttribute('data-color') === color1) {
 			numMatches++;
-			scoreEl.innerText = numMatches;
+			scoreEl.innerText = numMatches * 2;
 			firstSquare = null;
 			color1 = '';
 
@@ -92,7 +92,7 @@ handleCardClick = event => {
 					'You won! Click reset to play a new game.';
 				gameOver = true;
 
-				if (numMatches > highScore) {
+				if (numMatches * 2 > highScore * 2) {
 					localStorage.setItem('highScore', numMatches);
 				}
 			}
